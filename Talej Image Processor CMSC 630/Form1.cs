@@ -1125,15 +1125,15 @@ namespace Talej_Image_Processor_CMSC_630
             totaltimer.Stop();
 
             #region Metrics
-            batchGrayscaleTimeBox.Text = batchGrayscaletimerInt.ToString() + " ms";
-            BatchImpulseTimeBox.Text = batchImpulseNoiseTimerInt.ToString() + " ms";
-            BatchGaussianNoiseTimeBox.Text = batchGaussianNoiseTimerInt.ToString() + " ms";
-            BatchHistogramCalculationTimeBox.Text = batchHistGenTimerInt.ToString() + " ms";
-            BatchHistEqTimeBox.Text = batchHistEqImageTimerInt.ToString() + " ms";
-            BatchQuantizationTimeBox.Text = batchQuantizationTimerInt.ToString() + " ms";
-            BatchSharpenTimeBox.Text = batchLinearTimerInt.ToString() + " ms";
-            BatchMedianFilterTimeBox.Text = batchMedianTimerInt.ToString() + " ms";
-            classHist.Text = batchClassHistGenTimerInt.ToString() + " ms";
+            batchGrayscaleTimeBox.Text = (batchGrayscaletimerInt/=3).ToString() + " ms";
+            BatchImpulseTimeBox.Text = (batchImpulseNoiseTimerInt/=3).ToString() + " ms";
+            BatchGaussianNoiseTimeBox.Text = (batchGaussianNoiseTimerInt/=3).ToString() + " ms";
+            BatchHistogramCalculationTimeBox.Text = (batchHistGenTimerInt/=3).ToString() + " ms";
+            BatchHistEqTimeBox.Text = (batchHistEqImageTimerInt/=3).ToString() + " ms";
+            BatchQuantizationTimeBox.Text = (batchQuantizationTimerInt/=3).ToString() + " ms";
+            BatchSharpenTimeBox.Text = (batchLinearTimerInt/=3).ToString() + " ms";
+            BatchMedianFilterTimeBox.Text = (batchMedianTimerInt/=3).ToString() + " ms";
+            classHist.Text = (batchClassHistGenTimerInt/=3).ToString() + " ms";
 
             avgGrayScaleBox.Text = (batchGrayscaletimerInt / files.Count()).ToString() + " ms";
             avgImpulseBox.Text = (batchImpulseNoiseTimerInt / files.Count()).ToString() + " ms";
