@@ -19,18 +19,23 @@ namespace Talej_Image_Processor_CMSC_630
             outputTextBox.Text = Settings.Default.OutputPath;
             inputTextBox.ReadOnly = true;
             outputTextBox.ReadOnly = true;
-            comboBox1.Items.Insert(0, "None");
-            comboBox1.Items.Insert(1, "Linear 3x3 (Sharpen Preset)");
-            comboBox1.Items.Insert(2, "Linear 5x5 (Sharpen Preset)");
-            comboBox1.Items.Insert(3, "Median 3x3");
-            comboBox1.Items.Insert(4, "Median 5x5");
-            comboBox1.Items.Insert(5, "Linear 5x5 (Gaussian Blur Preset)");
+            quantErrorBox.ReadOnly = true;
+            linearFilterSelectionBox.Items.Insert(0, "None");
+            linearFilterSelectionBox.Items.Insert(1, "Linear 3x3 (Sharpen Preset)");
+            linearFilterSelectionBox.Items.Insert(2, "Linear 5x5 (Sharpen Preset)");
+            linearFilterSelectionBox.Items.Insert(3, "Linear 5x5 (Gaussian Blur Preset)");
+            medianFilterSelectionBox.Items.Insert(0, "None");
+            medianFilterSelectionBox.Items.Insert(1, "Median 3x3");
+            medianFilterSelectionBox.Items.Insert(2, "Median 5x5");
             filterBiasTextBox.Text = "0.0";
             filterFactorTextBox.Text = "1.0";
-            comboBox1.SelectedIndex = 0;
+            linearFilterSelectionBox.SelectedIndex = 0;
+            medianFilterSelectionBox.SelectedIndex = 0;
             quantLevelSlider.Value = 8;
             Matrix3x3.Visible = false;
             Matrix5x5.Visible = false;
+            MedianMatrix3x3.Visible = false;
+            MedianMatrix5x5.Visible = false;
             if (this.Original.Image == null || Settings.Default.ColorChoice == null)
             {
                 button2.Enabled = false;
@@ -52,16 +57,21 @@ namespace Talej_Image_Processor_CMSC_630
 
         private void button2_Click(object sender, EventArgs e)
         {
-            int filterSelection = comboBox1.SelectedIndex;
+            int linearFilterSelection = linearFilterSelectionBox.SelectedIndex;
+            int medianFilterSelection = medianFilterSelectionBox.SelectedIndex;
             double factor = Double.Parse(filterFactorTextBox.Text);
             double bias = Double.Parse(filterBiasTextBox.Text);
             int impulseInput = impulsenoiseintensityslider.Value;
             int gaussianInput = gaussianNoiseSlider.Value;
             int quantInput = quantLevelSlider.Value;
+            //List<string> cellClasses = new List<string> { "cyl", "para", "inter", "let", "mod", "super", "svar" };
 
             List<double> MaskWeights3x3 = new List<double>();
             List<double> MaskWeights5x5 = new List<double>();
-            if (filterSelection == 1 || filterSelection == 3)
+            List<double> MedianMaskWeights3x3 = new List<double>();
+            List<double> MedianMaskWeights5x5 = new List<double>();
+
+            if (linearFilterSelection == 1)
             {
                 MaskWeights3x3.Add(double.Parse(M3x300.Text));
                 MaskWeights3x3.Add(double.Parse(M3x301.Text));
@@ -74,7 +84,20 @@ namespace Talej_Image_Processor_CMSC_630
                 MaskWeights3x3.Add(double.Parse(M3x322.Text));
             }
 
-            if (filterSelection == 2 || filterSelection == 4 || filterSelection == 5)
+            if (medianFilterSelection == 1)
+            {
+                MedianMaskWeights3x3.Add(double.Parse(MM3x300.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x301.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x302.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x310.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x311.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x312.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x320.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x321.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x322.Text));
+            }
+
+            if (linearFilterSelection == 2 || linearFilterSelection == 3)
             {
                 MaskWeights5x5.Add(double.Parse(Matrix5x500.Text));
                 MaskWeights5x5.Add(double.Parse(Matrix5x501.Text));
@@ -103,6 +126,35 @@ namespace Talej_Image_Processor_CMSC_630
                 MaskWeights5x5.Add(double.Parse(Matrix5x544.Text));
             }
 
+            if (medianFilterSelection == 2)
+            {
+                MedianMaskWeights5x5.Add(double.Parse(MM5x500.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x501.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x502.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x503.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x504.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x510.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x511.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x512.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x513.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x514.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x520.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x521.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x522.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x523.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x524.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x530.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x531.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x532.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x533.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x534.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x540.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x541.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x542.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x543.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x544.Text));
+            }
+
 
 
             var grayscaletimer = new Stopwatch();
@@ -118,10 +170,7 @@ namespace Talej_Image_Processor_CMSC_630
 
             grayscaletimer.Start();
             Bitmap modifiedImage = ImageProcessing.RGB2GrayscaleImage(copy, Settings.Default.ColorChoice);
-            //byte[] grayscaleImageBuffer = ImageProcessing.RGB2GrayscaleImage(copy, Settings.Default.ColorChoice);
             grayscaletimer.Stop();
-            //Bitmap grayscaleImage = ImageProcessing.CreateImage(grayscaleImageBuffer, copy.Width, copy.Height);
-            //this.Modified.Image = ImageProcessing.ResizeImage(grayscaleImage, 288, 219);
             this.Modified.Image = ImageProcessing.ResizeImage(modifiedImage, 288, 219);
 
 
@@ -134,7 +183,6 @@ namespace Talej_Image_Processor_CMSC_630
             {
                 impulseNoiseTimer.Start();
                 Bitmap ImpulseNoiseImage = ImageProcessing.ImpulseNoise(modifiedImage, impulseInput);
-                //Bitmap ImpulseNoiseImage = ImageProcessing.ImpulseNoise(grayscaleImageBuffer, impulsenoiseintensityslider.Value, copy.Width, copy.Height);
                 impulseNoiseTimer.Stop();
                 this.Modified.Image = ImageProcessing.ResizeImage(ImpulseNoiseImage, 288, 219);
             }
@@ -148,7 +196,7 @@ namespace Talej_Image_Processor_CMSC_630
             }
 
 
-            if(filterSelection == 1)
+            if(linearFilterSelection == 1)
             {
                 linearTimer.Start();
                 Bitmap linearImage = ImageProcessing.LinearFilter3x3(modifiedImage, MaskWeights3x3, factor, bias);
@@ -156,34 +204,32 @@ namespace Talej_Image_Processor_CMSC_630
                 this.Modified.Image = ImageProcessing.ResizeImage(linearImage, 288, 219);
             }
 
-            if (filterSelection == 2)
+            if (linearFilterSelection == 2)
             {
                 linearTimer.Start();
-                //Bitmap linearImage5x5 = ImageProcessing.Linear5x5(modifiedImage, MaskWeights5x5, Double.Parse(filterFactorTextBox.Text), Double.Parse(filterBiasTextBox.Text));
                 Bitmap linearImage5x5 = ImageProcessing.LinearFilter5x5(modifiedImage, MaskWeights5x5, factor, bias);
                 linearTimer.Stop();
                 this.Modified.Image = ImageProcessing.ResizeImage(linearImage5x5, 288, 219);
             }
-            if (filterSelection == 3)
+            if (medianFilterSelection == 1)
             {
                 medianFilterTimer.Start();
-                Bitmap MedianFilteredImage = ImageProcessing.MedianFilter3x3(modifiedImage, MaskWeights3x3);
+                Bitmap MedianFilteredImage = ImageProcessing.MedianFilter3x3(modifiedImage, MedianMaskWeights3x3);
                 medianFilterTimer.Stop();
                 this.Modified.Image = ImageProcessing.ResizeImage(MedianFilteredImage, 288, 219);
             }
 
-            if (filterSelection == 4)
+            if (medianFilterSelection == 2)
             {
                 medianFilterTimer.Start();
-                Bitmap MedianFilteredImage = ImageProcessing.MedianFilter5x5(modifiedImage, MaskWeights5x5);
+                Bitmap MedianFilteredImage = ImageProcessing.MedianFilter5x5(modifiedImage, MedianMaskWeights5x5);
                 medianFilterTimer.Stop();
                 this.Modified.Image = ImageProcessing.ResizeImage(MedianFilteredImage, 288, 219);
             }
 
-            if (filterSelection == 5)
+            if (linearFilterSelection == 3)
             {
                 linearTimer.Start();
-                //Bitmap linearImage5x5 = ImageProcessing.Linear5x5(modifiedImage, MaskWeights5x5, Double.Parse(filterFactorTextBox.Text), Double.Parse(filterBiasTextBox.Text));
                 Bitmap linearImage5x5 = ImageProcessing.LinearFilter5x5(modifiedImage, MaskWeights5x5, factor, bias);
                 linearTimer.Stop();
                 this.Modified.Image = ImageProcessing.ResizeImage(linearImage5x5, 288, 219);
@@ -251,16 +297,35 @@ namespace Talej_Image_Processor_CMSC_630
 
         private void button5_Click(object sender, EventArgs e)
         {
-            int filterSelection = comboBox1.SelectedIndex;
+            int linearFilterSelection = linearFilterSelectionBox.SelectedIndex;
+            int medianFilterSelection = medianFilterSelectionBox.SelectedIndex;
+
             double factor = Double.Parse(filterFactorTextBox.Text);
             double bias = Double.Parse(filterBiasTextBox.Text);
             int impulseInput = impulsenoiseintensityslider.Value;
             int gaussianInput = gaussianNoiseSlider.Value;
             int quantInput = quantLevelSlider.Value;
-
+            List<string> cellClasses = new List<string> { "cyl", "para", "inter", "let", "mod", "super", "svar" };
             List<double> MaskWeights3x3 = new List<double>();
             List<double> MaskWeights5x5 = new List<double>();
-            if (filterSelection == 1 || filterSelection == 3)
+            List<double> MedianMaskWeights3x3 = new List<double>();
+            List<double> MedianMaskWeights5x5 = new List<double>();
+            #region placeholders for stopwatch
+
+            long batchGrayscaletimerInt = 0;
+            long batchImpulseNoiseTimerInt = 0;
+            long batchGaussianNoiseTimerInt = 0;
+            long batchHistGenTimerInt = 0;
+            long batchClassHistGenTimerInt = 0;
+            long batchHistEqImageTimerInt = 0;
+            long batchQuantizationTimerInt = 0;
+            long batchLinearTimerInt = 0;
+            long batchMedianTimerInt = 0;
+            #endregion
+            #region Filter Mask Weight Mapping
+
+
+            if (linearFilterSelection == 1)
             {
                 MaskWeights3x3.Add(double.Parse(M3x300.Text));
                 MaskWeights3x3.Add(double.Parse(M3x301.Text));
@@ -273,7 +338,20 @@ namespace Talej_Image_Processor_CMSC_630
                 MaskWeights3x3.Add(double.Parse(M3x322.Text));
             }
 
-            if (filterSelection == 2 || filterSelection == 4 || filterSelection == 5)
+            if (medianFilterSelection == 1)
+            {
+                MedianMaskWeights3x3.Add(double.Parse(MM3x300.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x301.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x302.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x310.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x311.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x312.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x320.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x321.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x322.Text));
+            }
+
+            if (linearFilterSelection == 2 || linearFilterSelection == 3)
             {
                 MaskWeights5x5.Add(double.Parse(Matrix5x500.Text));
                 MaskWeights5x5.Add(double.Parse(Matrix5x501.Text));
@@ -301,8 +379,37 @@ namespace Talej_Image_Processor_CMSC_630
                 MaskWeights5x5.Add(double.Parse(Matrix5x543.Text));
                 MaskWeights5x5.Add(double.Parse(Matrix5x544.Text));
             }
-            var totaltimer = new Stopwatch();
-            totaltimer.Start();
+
+            if (medianFilterSelection == 2)
+            {
+                MedianMaskWeights5x5.Add(double.Parse(MM5x500.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x501.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x502.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x503.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x504.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x510.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x511.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x512.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x513.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x514.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x520.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x521.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x522.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x523.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x524.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x530.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x531.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x532.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x533.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x534.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x540.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x541.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x542.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x543.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x544.Text));
+            }
+            #endregion
+
             string inputPath = Settings.Default["InputPath"].ToString();
             string outputPath = Settings.Default["OutputPath"].ToString();
             var files = new DirectoryInfo(inputPath)
@@ -313,183 +420,178 @@ namespace Talej_Image_Processor_CMSC_630
             {
                 button5.Enabled = false;
             }
-            var batchGrayscaletimer = new Stopwatch();
+            #region Initialize timers
+            var batchGrayscaleTimer = new Stopwatch();
             var batchImpulseNoiseTimer = new Stopwatch();
             var batchGaussianNoiseTimer = new Stopwatch();
             var batchHistGenTimer = new Stopwatch();
+            var batchClassHistGenTimer = new Stopwatch();
             var batchHistEqImageTimer = new Stopwatch();
             var batchQuantizationTimer = new Stopwatch();
             var batchLinearTimer = new Stopwatch();
             var batchMedianTimer = new Stopwatch();
+            var totaltimer = new Stopwatch();
+            totaltimer.Start();
+            #endregion
 
             //Original single threaded execution process
             foreach (var file in files)
             {
                 using (Bitmap image = (Bitmap)Bitmap.FromFile(file.FullName))
                 {
-                    batchGrayscaletimer.Start();
-                    using (var grayscaleImage = ImageProcessing.RGB2GrayscaleImage(image, Settings.Default.ColorChoice))
-                    //using (var grayscaleImageBuffer = ImageProcessing.RGB2GrayscaleImage(image, Settings.Default.ColorChoice))
-                    {
-                        batchGrayscaletimer.Stop();
-                        var grayscaleImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_grayscale_conversion" + file.Extension);
-                        grayscaleImage.Save(grayscaleImageName);
+                    batchGrayscaleTimer.Restart();
+                    var grayscaleImage = ImageProcessing.RGB2GrayscaleImage(image, Settings.Default.ColorChoice);
+                    var grayscaleImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_grayscale_conversion" + file.Extension);
+                    grayscaleImage.Save(grayscaleImageName);
+                    batchGrayscaleTimer.Stop();
+                    batchGrayscaletimerInt += batchGrayscaleTimer.ElapsedMilliseconds;
 
-                        //Begin Impulse Noise
-                        if (impulseInput > 0)
+                    //Begin Impulse Noise
+                    if (impulseInput > 0)
                         {
-                                batchImpulseNoiseTimer.Start();
+                                batchImpulseNoiseTimer.Restart();
+                                //batchImpulseNoiseTimer.Start();
                                 var ImpulsedImage = ImageProcessing.ImpulseNoise(grayscaleImage, impulseInput);
-                                batchImpulseNoiseTimer.Stop();
                                 var newImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_processed_impulse_noise" + file.Extension);
                                 ImpulsedImage.Save(newImageName);
-
-
-                        }
-                        //Begin Gaussian Noise 
-                        if (gaussianInput > 0)
+                                batchImpulseNoiseTimer.Stop();
+                                batchImpulseNoiseTimerInt += batchImpulseNoiseTimer.ElapsedMilliseconds;
+                    }
+                    //Begin Gaussian Noise 
+                    if (gaussianInput > 0)
                         {
 
-                                batchGaussianNoiseTimer.Start();
+                                //batchGaussianNoiseTimer.Start();
+                                batchGaussianNoiseTimer.Restart();
                                 var GaussianNoiseImage = ImageProcessing.GaussianNoise(grayscaleImage, gaussianInput);
-                                batchGaussianNoiseTimer.Stop();
                                 var newImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_processed_gaussian_noise" + file.Extension);
                                 GaussianNoiseImage.Save(newImageName);
-
-
+                                batchGaussianNoiseTimer.Stop();
+                                batchGaussianNoiseTimerInt += batchGaussianNoiseTimer.ElapsedMilliseconds;
                         }
 
 
                             //Begin histogram generation
-                            batchHistGenTimer.Start();
+                            //batchHistGenTimer.Start();
+                            batchHistGenTimer.Restart();
                             var HistogramImage = ImageProcessing.GenerateHistogram(grayscaleImage);
-                            batchHistGenTimer.Stop();
                             var histogramImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_histogram" + file.Extension);
                             HistogramImage.Save(histogramImageName);
+                            batchHistGenTimer.Stop();
+                            batchHistGenTimerInt += batchHistGenTimer.ElapsedMilliseconds;
 
                             //Begin histogram equalization
-                            batchHistEqImageTimer.Start();
+                            //batchHistEqImageTimer.Start();
+                            batchHistEqImageTimer.Restart();
                             var HistogramEqImage = ImageProcessing.HistogramEqualizedImage(grayscaleImage);
-                            batchHistEqImageTimer.Stop();
-
                             var histogramEqImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_histogram_equalized" + file.Extension);
                             HistogramEqImage.Save(histogramEqImageName);
+                            batchHistEqImageTimer.Stop();
+                            batchHistEqImageTimerInt+= batchHistEqImageTimer.ElapsedMilliseconds;
 
 
                         //Begin Filtering
-                        if (filterSelection == 1)
+                        if (linearFilterSelection == 1)
                         {
 
-                                batchLinearTimer.Start();
+                                //batchLinearTimer.Start();
+                                batchLinearTimer.Restart();
                                 var linearImage = ImageProcessing.LinearFilter3x3(grayscaleImage, MaskWeights3x3, factor, bias);
-
-                                batchLinearTimer.Stop();
                                 var linearImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_linear_3x3_sharpen" + file.Extension);
                                 linearImage.Save(linearImageName);
-
- 
+                                batchLinearTimer.Stop();
+                                batchLinearTimerInt += batchLinearTimer.ElapsedMilliseconds;
                         }
 
-                        if (filterSelection == 2)
+                    if (linearFilterSelection == 2)
                         {
-
-                                batchLinearTimer.Start();
+                            
+                                //batchLinearTimer.Start();
+                                batchLinearTimer.Restart();
                                 var linearImage = ImageProcessing.LinearFilter5x5(grayscaleImage, MaskWeights5x5, factor, bias);
-
-                                batchLinearTimer.Stop();
                                 var linearImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_linear_5x5_sharpen" + file.Extension);
                                 linearImage.Save(linearImageName);
-
-                            
-
+                                batchLinearTimer.Stop();
+                                batchLinearTimerInt += batchLinearTimer.ElapsedMilliseconds;
                         }
 
-                        if (filterSelection == 3)
+                        if (medianFilterSelection == 1)
                         {
-
-                                batchMedianTimer.Start();
-                                var medianImage = ImageProcessing.MedianFilter3x3(grayscaleImage, MaskWeights3x3);
-
-                                batchMedianTimer.Stop();
+                                //batchMedianTimer.Start();
+                                batchMedianTimer.Restart();
+                                var medianImage = ImageProcessing.MedianFilter3x3(grayscaleImage, MedianMaskWeights3x3);
                                 var medianImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_median_3x3" + file.Extension);
                                 medianImage.Save(medianImageName);
-
-
+                                batchMedianTimer.Stop();
+                                batchMedianTimerInt += batchMedianTimer.ElapsedMilliseconds;
                         }
 
-                        if (filterSelection == 4)
+                    if (medianFilterSelection == 2)
                         {
 
-
-                                batchMedianTimer.Start();
-                                var medianImage = ImageProcessing.MedianFilter5x5(grayscaleImage, MaskWeights5x5);
-
-                                batchMedianTimer.Stop();
+                                batchMedianTimer.Restart();
+                                //batchMedianTimer.Start();
+                                var medianImage = ImageProcessing.MedianFilter5x5(grayscaleImage, MedianMaskWeights5x5);
                                 var medianImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_median_5x5" + file.Extension);
                                 medianImage.Save(medianImageName);
-
-
-                        }
-
-                        if (filterSelection == 5)
-                        {
-
-                            batchLinearTimer.Start();
-                            var linearImage = ImageProcessing.LinearFilter5x5(grayscaleImage, MaskWeights5x5, factor, bias);
-
-                            batchLinearTimer.Stop();
-                            var linearImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_linear_5x5_gaussian_blur" + file.Extension);
-                            linearImage.Save(linearImageName);
-
-                        }
-
-                        //Begin Image Quantization
-                        var quantizedImageError = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_quantization_error.txt");
-
-                        batchQuantizationTimer.Start();
-                            var quantizedImage = ImageProcessing.UniformImageQuantization(grayscaleImage, quantInput, quantizedImageError);
-                            batchQuantizationTimer.Stop();
-                            var quantizedImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_quantized_" + quantLevelSlider.Value.ToString() + "_levels" + file.Extension);
-                            quantizedImage.Save(quantizedImageName);
-
-                        
- 
+                                batchMedianTimer.Stop();
+                        batchMedianTimerInt += batchMedianTimer.ElapsedMilliseconds;
 
                     }
+
+                    if (linearFilterSelection == 3)
+                        {
+
+                            //batchLinearTimer.Start();
+                            batchLinearTimer.Restart();
+                            var linearImage = ImageProcessing.LinearFilter5x5(grayscaleImage, MaskWeights5x5, factor, bias);
+                            var linearImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_linear_5x5_gaussian_blur" + file.Extension);
+                            linearImage.Save(linearImageName);
+                            batchLinearTimer.Stop();
+                            batchLinearTimerInt += batchLinearTimer.ElapsedMilliseconds;
+                        }
+
+                            //Begin Image Quantization
+                            var quantizedImageError = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_quantization_error.txt");
+                            //batchQuantizationTimer.Start();
+                            batchQuantizationTimer.Restart();
+                            var quantizedImage = ImageProcessing.UniformImageQuantization(grayscaleImage, quantInput, quantizedImageError);
+                            var quantizedImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_quantized_" + quantInput.ToString() + "_levels" + file.Extension);
+                            quantizedImage.Save(quantizedImageName);
+                            batchQuantizationTimer.Stop();
+                            batchQuantizationTimerInt += batchQuantizationTimer.ElapsedMilliseconds; 
                 }
             }
-            ImageProcessing.GenerateCellClassAvgHistogram("cyl");
-            ImageProcessing.GenerateCellClassAvgHistogram("inter");
 
-            ImageProcessing.GenerateCellClassAvgHistogram("para");
-
-            ImageProcessing.GenerateCellClassAvgHistogram("mod");
-
-            ImageProcessing.GenerateCellClassAvgHistogram("super");
-
-            ImageProcessing.GenerateCellClassAvgHistogram("svar");
-            ImageProcessing.GenerateCellClassAvgHistogram("let");
+            batchClassHistGenTimer.Restart();
+            foreach(var cellClass in cellClasses)
+            {
+                ImageProcessing.GenerateCellClassAvgHistogram(cellClass);
+            }
+            batchClassHistGenTimer.Stop();
+            batchClassHistGenTimerInt += batchClassHistGenTimer.ElapsedMilliseconds;
 
             totaltimer.Stop();
 
             #region Metrics
-            batchGrayscaleTimeBox.Text = batchGrayscaletimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchImpulseTimeBox.Text = batchImpulseNoiseTimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchGaussianNoiseTimeBox.Text = batchGaussianNoiseTimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchHistogramCalculationTimeBox.Text = batchHistGenTimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchHistEqTimeBox.Text = batchHistEqImageTimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchQuantizationTimeBox.Text = batchQuantizationTimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchSharpenTimeBox.Text = batchLinearTimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchMedianFilterTimeBox.Text = batchMedianTimer.ElapsedMilliseconds.ToString() + " ms";
-
-            avgGrayScaleBox.Text = (batchGrayscaletimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgImpulseBox.Text = (batchImpulseNoiseTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgGNoiseBox.Text = (batchGaussianNoiseTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgHistCalcBox.Text = (batchHistGenTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgHistEqBox.Text = (batchHistEqImageTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgQuantBox.Text = (batchQuantizationTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgLinearBox.Text = (batchLinearTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgMedianBox.Text = (batchMedianTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
+            batchGrayscaleTimeBox.Text = batchGrayscaletimerInt.ToString() + " ms";
+            BatchImpulseTimeBox.Text = batchImpulseNoiseTimerInt.ToString() + " ms";
+            BatchGaussianNoiseTimeBox.Text = batchGaussianNoiseTimerInt.ToString() + " ms";
+            BatchHistogramCalculationTimeBox.Text = batchHistGenTimerInt.ToString() + " ms";
+            BatchHistEqTimeBox.Text = batchHistEqImageTimerInt.ToString() + " ms";
+            BatchQuantizationTimeBox.Text = batchQuantizationTimerInt.ToString() + " ms";
+            BatchSharpenTimeBox.Text = batchLinearTimerInt.ToString() + " ms";
+            BatchMedianFilterTimeBox.Text = batchMedianTimerInt.ToString() + " ms";
+            classHist.Text = batchClassHistGenTimerInt.ToString() + " ms";
+            avgGrayScaleBox.Text = (batchGrayscaletimerInt / files.Count()).ToString() + " ms";
+            avgImpulseBox.Text = (batchImpulseNoiseTimerInt / files.Count()).ToString() + " ms";
+            avgGNoiseBox.Text = (batchGaussianNoiseTimerInt / files.Count()).ToString() + " ms";
+            avgHistCalcBox.Text = (batchHistGenTimerInt / files.Count()).ToString() + " ms";
+            avgHistEqBox.Text = (batchHistEqImageTimerInt / files.Count()).ToString() + " ms";
+            avgQuantBox.Text = (batchQuantizationTimerInt / files.Count()).ToString() + " ms";
+            avgLinearBox.Text = (batchLinearTimerInt / files.Count()).ToString() + " ms";
+            avgMedianBox.Text = (batchMedianTimerInt / files.Count()).ToString() + " ms";
+            avgClassHist.Text = (batchClassHistGenTimerInt / 7).ToString() + " ms";
             totalTimeBox.Text = totaltimer.ElapsedMilliseconds.ToString() + " ms";
             #endregion
         }
@@ -610,7 +712,7 @@ namespace Talej_Image_Processor_CMSC_630
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedIndex == 0)
+            if (linearFilterSelectionBox.SelectedIndex == 0)
             {
                 Matrix3x3.Visible = false;
                 Matrix5x5.Visible = false;
@@ -620,7 +722,7 @@ namespace Talej_Image_Processor_CMSC_630
                 filterFactorTextBox.Enabled = false;
 
             }
-            if (comboBox1.SelectedIndex == 1)
+            if (linearFilterSelectionBox.SelectedIndex == 1)
             {
                 Matrix3x3.Visible = true;
                 Matrix5x5.Visible = false;
@@ -640,7 +742,7 @@ namespace Talej_Image_Processor_CMSC_630
                 filterFactorTextBox.Enabled = true;
 
             }
-            if (comboBox1.SelectedIndex == 2)
+            if (linearFilterSelectionBox.SelectedIndex == 2)
             {
                 Matrix3x3.Visible = false;
                 Matrix5x5.Visible = true;
@@ -678,65 +780,8 @@ namespace Talej_Image_Processor_CMSC_630
                 filterFactorTextBox.Enabled = true;
             }
 
-            if (comboBox1.SelectedIndex == 3)
-            {
-                Matrix3x3.Visible = true;
-                Matrix5x5.Visible = false;
-                M3x300.Text = "1";
-                M3x301.Text = "1";
-                M3x302.Text = "1";
-                M3x310.Text = "1";
-                M3x311.Text = "1";
-                M3x312.Text = "1";
-                M3x320.Text = "1";
-                M3x321.Text = "1";
-                M3x322.Text = "1";
 
-                filterFactorTextBox.Text = "0.0";
-                filterBiasTextBox.Text = "0.0";
-                filterBiasTextBox.Enabled = false;
-                filterFactorTextBox.Enabled = false;
-
-            }
-
-            if (comboBox1.SelectedIndex == 4)
-            {
-                Matrix3x3.Visible = false;
-                Matrix5x5.Visible = true;
-
-                Matrix5x500.Text = "1";
-                Matrix5x501.Text = "1";
-                Matrix5x502.Text = "1";
-                Matrix5x503.Text = "1";
-                Matrix5x504.Text = "1";
-                Matrix5x510.Text = "1";
-                Matrix5x511.Text = "1";
-                Matrix5x512.Text = "1";
-                Matrix5x513.Text = "1";
-                Matrix5x514.Text = "1";
-                Matrix5x520.Text = "1";
-                Matrix5x521.Text = "1";
-                Matrix5x522.Text = "1";
-                Matrix5x523.Text = "1";
-                Matrix5x524.Text = "1";
-                Matrix5x530.Text = "1";
-                Matrix5x531.Text = "1";
-                Matrix5x532.Text = "1";
-                Matrix5x533.Text = "1";
-                Matrix5x534.Text = "1";
-                Matrix5x540.Text = "1";
-                Matrix5x541.Text = "1";
-                Matrix5x542.Text = "1";
-                Matrix5x543.Text = "1";
-                Matrix5x544.Text = "1";
-
-                filterFactorTextBox.Text = "0.0";
-                filterBiasTextBox.Text = "0.0";
-                filterBiasTextBox.Enabled = false;
-                filterFactorTextBox.Enabled = false;
-            }
-
-            if (comboBox1.SelectedIndex == 5)
+            if (linearFilterSelectionBox.SelectedIndex == 3)
             {
                 Matrix3x3.Visible = false;
                 Matrix5x5.Visible = true;
@@ -804,16 +849,34 @@ namespace Talej_Image_Processor_CMSC_630
 
         private void button6_Click(object sender, EventArgs e)
         {
-            int filterSelection = comboBox1.SelectedIndex;
+            int linearFilterSelection = linearFilterSelectionBox.SelectedIndex;
+            int medianFilterSelection = medianFilterSelectionBox.SelectedIndex;
             double factor = Double.Parse(filterFactorTextBox.Text);
             double bias = Double.Parse(filterBiasTextBox.Text);
             int impulseInput = impulsenoiseintensityslider.Value;
             int gaussianInput = gaussianNoiseSlider.Value;
             int quantInput = quantLevelSlider.Value;
-
+            List<string> cellClasses = new List<string> {"cyl", "para", "inter", "let", "mod", "super", "svar" };
             List<double> MaskWeights3x3 = new List<double>();
             List<double> MaskWeights5x5 = new List<double>();
-            if (filterSelection == 1 || filterSelection == 3)
+            List<double> MedianMaskWeights3x3 = new List<double>();
+            List<double> MedianMaskWeights5x5 = new List<double>();
+
+            #region placeholders for stopwatch
+
+            long batchGrayscaletimerInt = 0;
+            long batchImpulseNoiseTimerInt = 0;
+            long batchGaussianNoiseTimerInt = 0;
+            long batchHistGenTimerInt = 0;
+            long batchClassHistGenTimerInt = 0;
+            long batchHistEqImageTimerInt = 0;
+            long batchQuantizationTimerInt = 0;
+            long batchLinearTimerInt = 0;
+            long batchMedianTimerInt = 0;
+            #endregion
+
+            #region Filter mask weight mapping
+            if (linearFilterSelection == 1)
             {
                 MaskWeights3x3.Add(double.Parse(M3x300.Text));
                 MaskWeights3x3.Add(double.Parse(M3x301.Text));
@@ -826,7 +889,20 @@ namespace Talej_Image_Processor_CMSC_630
                 MaskWeights3x3.Add(double.Parse(M3x322.Text));
             }
 
-            if (filterSelection == 2 || filterSelection == 4 || filterSelection == 5)
+            if (medianFilterSelection == 1)
+            {
+                MedianMaskWeights3x3.Add(double.Parse(MM3x300.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x301.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x302.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x310.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x311.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x312.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x320.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x321.Text));
+                MedianMaskWeights3x3.Add(double.Parse(MM3x322.Text));
+            }
+
+            if (linearFilterSelection == 2 || linearFilterSelection == 3)
             {
                 MaskWeights5x5.Add(double.Parse(Matrix5x500.Text));
                 MaskWeights5x5.Add(double.Parse(Matrix5x501.Text));
@@ -854,8 +930,37 @@ namespace Talej_Image_Processor_CMSC_630
                 MaskWeights5x5.Add(double.Parse(Matrix5x543.Text));
                 MaskWeights5x5.Add(double.Parse(Matrix5x544.Text));
             }
-            var totaltimer = new Stopwatch();
-            totaltimer.Start();
+
+            if (medianFilterSelection == 2)
+            {
+                MedianMaskWeights5x5.Add(double.Parse(MM5x500.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x501.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x502.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x503.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x504.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x510.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x511.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x512.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x513.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x514.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x520.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x521.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x522.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x523.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x524.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x530.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x531.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x532.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x533.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x534.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x540.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x541.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x542.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x543.Text));
+                MedianMaskWeights5x5.Add(double.Parse(MM5x544.Text));
+            }
+            #endregion
+
             string inputPath = Settings.Default["InputPath"].ToString();
             string outputPath = Settings.Default["OutputPath"].ToString();
             var files = new DirectoryInfo(inputPath)
@@ -866,171 +971,284 @@ namespace Talej_Image_Processor_CMSC_630
             {
                 button5.Enabled = false;
             }
-            var batchGrayscaletimer = new Stopwatch();
+            var batchGrayscaleTimer = new Stopwatch();
             var batchImpulseNoiseTimer = new Stopwatch();
             var batchGaussianNoiseTimer = new Stopwatch();
             var batchHistGenTimer = new Stopwatch();
             var batchHistEqImageTimer = new Stopwatch();
+            var batchClassHistGenTimer = new Stopwatch();
             var batchQuantizationTimer = new Stopwatch();
             var batchLinearTimer = new Stopwatch();
             var batchMedianTimer = new Stopwatch();
-
+            var totaltimer = new Stopwatch();
+            totaltimer.Start();
 
             //parallelized method. Extremely fast. 
             Parallel.ForEach(files, file =>
             {
                 using (Bitmap image = (Bitmap)Bitmap.FromFile(file.FullName))
                 {
-                    batchGrayscaletimer.Start();
-                    using (var grayscaleImage = ImageProcessing.RGB2GrayscaleImage(image, Settings.Default.ColorChoice))
-                    //using (var grayscaleImageBuffer = ImageProcessing.RGB2GrayscaleImage(image, Settings.Default.ColorChoice))
+                    batchGrayscaleTimer.Restart();
+                    var grayscaleImage = ImageProcessing.RGB2GrayscaleImage(image, Settings.Default.ColorChoice);
+                    var grayscaleImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_grayscale_conversion" + file.Extension);
+                    grayscaleImage.Save(grayscaleImageName);
+                    batchGrayscaleTimer.Stop();
+                    batchGrayscaletimerInt += batchGrayscaleTimer.ElapsedMilliseconds;
+
+                    //Begin Impulse Noise
+                    if (impulseInput > 0)
                     {
-                        batchGrayscaletimer.Stop();
-                        var grayscaleImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_grayscale_conversion" + file.Extension);
-                        grayscaleImage.Save(grayscaleImageName);
-
-                        if (impulseInput > 0)
-                        {
-
-                                batchImpulseNoiseTimer.Start();
-                                var ImpulsedImage = ImageProcessing.ImpulseNoise(grayscaleImage, impulseInput);
-                                batchImpulseNoiseTimer.Stop();
-                                var newImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_processed_impulse_noise" + file.Extension);
-                                ImpulsedImage.Save(newImageName);
-                        }
-
-                        if (gaussianInput > 0)
-                        {
-
-                                batchGaussianNoiseTimer.Start();
-                                var GaussianNoiseImage = ImageProcessing.GaussianNoise(grayscaleImage, gaussianInput);
-                                batchGaussianNoiseTimer.Stop();
-                                var newImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_processed_gaussian_noise" + file.Extension);
-                                GaussianNoiseImage.Save(newImageName);
-                        }
-
-                            batchHistGenTimer.Start();
-                            var HistogramImage = ImageProcessing.GenerateHistogram(grayscaleImage);
-                            batchHistGenTimer.Stop();
-                            var histogramImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_histogram" + file.Extension);
-                            HistogramImage.Save(histogramImageName);
-
-                            batchHistEqImageTimer.Start();
-                            var HistogramEqImage = ImageProcessing.HistogramEqualizedImage(grayscaleImage);
-                            batchHistEqImageTimer.Stop();
-
-                            var histogramEqImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_histogram_equalized" + file.Extension);
-                            HistogramEqImage.Save(histogramEqImageName);
-
-
-                        var quantizedImageError = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_quantization_error.txt");
-
-                        batchQuantizationTimer.Start();
-                            var quantizedImage = ImageProcessing.UniformImageQuantization(grayscaleImage, quantInput, quantizedImageError);
-
-                            batchQuantizationTimer.Stop();
-                            var quantizedImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_quantized_" + quantInput.ToString() + "_levels" + file.Extension);
-                            quantizedImage.Save(quantizedImageName);
-
-                        if (filterSelection == 1)
-                        {
-                                batchLinearTimer.Start();
-                                var linearImage = ImageProcessing.LinearFilter3x3(grayscaleImage, MaskWeights3x3, factor, bias);
-
-                                batchLinearTimer.Stop();
-                                var linearImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_linear_3x3_sharpen" + file.Extension);
-                                linearImage.Save(linearImageName);
-
-                        }
-
-                        if (filterSelection == 2)
-                        {
-           
-                                batchLinearTimer.Start();
-                                var linearImage = ImageProcessing.LinearFilter5x5(grayscaleImage, MaskWeights5x5, factor, bias);
-
-                                batchLinearTimer.Stop();
-                                var linearImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_linear_5x5_sharpen" + file.Extension);
-                                linearImage.Save(linearImageName);
-
-                        }
-
-                        if (filterSelection == 3)
-                        {
-
-                                batchMedianTimer.Start();
-                                var medianImage = ImageProcessing.MedianFilter3x3(grayscaleImage, MaskWeights3x3);
-
-                                batchMedianTimer.Stop();
-                                var medianImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_median_3x3" + file.Extension);
-                                medianImage.Save(medianImageName);
-
-                        }
-
-                        if (filterSelection == 4)
-                        {
-
-                                batchMedianTimer.Start();
-                                var medianImage = ImageProcessing.MedianFilter5x5(grayscaleImage, MaskWeights5x5);
-
-                                batchMedianTimer.Stop();
-                                var medianImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_median_5x5" + file.Extension);
-                                medianImage.Save(medianImageName);
-                        }
-
-                        if (filterSelection == 5)
-                        {
-
-                            batchLinearTimer.Start();
-                            var linearImage = ImageProcessing.LinearFilter5x5(grayscaleImage, MaskWeights5x5, factor, bias);
-
-                            batchLinearTimer.Stop();
-                            var linearImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_linear_5x5_gaussian_blur" + file.Extension);
-                            linearImage.Save(linearImageName);
-
-                        }
+                        batchImpulseNoiseTimer.Restart();
+                        var ImpulsedImage = ImageProcessing.ImpulseNoise(grayscaleImage, impulseInput);
+                        batchImpulseNoiseTimer.Stop();
+                        batchImpulseNoiseTimerInt += batchImpulseNoiseTimer.ElapsedMilliseconds;
+                        var newImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_processed_impulse_noise" + file.Extension);
+                        ImpulsedImage.Save(newImageName);
 
                     }
+                    //Begin Gaussian Noise 
+                    if (gaussianInput > 0)
+                    {
+
+                        //batchGaussianNoiseTimer.Start();
+                        batchGaussianNoiseTimer.Restart();
+                        var GaussianNoiseImage = ImageProcessing.GaussianNoise(grayscaleImage, gaussianInput);
+                        batchGaussianNoiseTimer.Stop();
+                        batchGaussianNoiseTimerInt += batchGaussianNoiseTimer.ElapsedMilliseconds;
+                        var newImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_processed_gaussian_noise" + file.Extension);
+                        GaussianNoiseImage.Save(newImageName);
+
+                    }
+
+
+                    //Begin histogram generation
+                    //batchHistGenTimer.Start();
+                    batchHistGenTimer.Restart();
+                    var HistogramImage = ImageProcessing.GenerateHistogram(grayscaleImage);
+                    var histogramImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_histogram" + file.Extension);
+                    HistogramImage.Save(histogramImageName);
+                    batchHistGenTimer.Stop();
+                    batchHistGenTimerInt += batchHistGenTimer.ElapsedMilliseconds;
+
+                    //Begin histogram equalization
+                    //batchHistEqImageTimer.Start();
+                    batchHistEqImageTimer.Restart();
+                    var HistogramEqImage = ImageProcessing.HistogramEqualizedImage(grayscaleImage);
+                    var histogramEqImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_histogram_equalized" + file.Extension);
+                    HistogramEqImage.Save(histogramEqImageName);
+                    batchHistEqImageTimer.Stop();
+                    batchHistEqImageTimerInt += batchHistEqImageTimer.ElapsedMilliseconds;
+
+
+                    //Begin Filtering
+                    if (linearFilterSelection == 1)
+                    {
+
+                        //batchLinearTimer.Start();
+                        batchLinearTimer.Restart();
+                        var linearImage = ImageProcessing.LinearFilter3x3(grayscaleImage, MaskWeights3x3, factor, bias);
+                        var linearImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_linear_3x3_sharpen" + file.Extension);
+                        linearImage.Save(linearImageName);
+                        batchLinearTimer.Stop();
+                        batchLinearTimerInt += batchLinearTimer.ElapsedMilliseconds;
+                    }
+
+                    if (linearFilterSelection == 2)
+                    {
+
+                        //batchLinearTimer.Start();
+                        batchLinearTimer.Restart();
+                        var linearImage = ImageProcessing.LinearFilter5x5(grayscaleImage, MaskWeights5x5, factor, bias);
+                        var linearImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_linear_5x5_sharpen" + file.Extension);
+                        linearImage.Save(linearImageName);
+                        batchLinearTimer.Stop();
+                        batchLinearTimerInt += batchLinearTimer.ElapsedMilliseconds;
+                    }
+
+                    if (medianFilterSelection == 1)
+                    {
+                        //batchMedianTimer.Start();
+                        batchMedianTimer.Restart();
+                        var medianImage = ImageProcessing.MedianFilter3x3(grayscaleImage, MedianMaskWeights3x3);
+                        var medianImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_median_3x3" + file.Extension);
+                        medianImage.Save(medianImageName);
+                        batchMedianTimer.Stop();
+                        batchMedianTimerInt += batchMedianTimer.ElapsedMilliseconds;
+                    }
+
+                    if (medianFilterSelection == 2)
+                    {
+
+                        batchMedianTimer.Restart();
+                        //batchMedianTimer.Start();
+                        var medianImage = ImageProcessing.MedianFilter5x5(grayscaleImage, MedianMaskWeights5x5);
+                        var medianImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_median_5x5" + file.Extension);
+                        medianImage.Save(medianImageName);
+                        batchMedianTimer.Stop();
+                        batchMedianTimerInt += batchMedianTimer.ElapsedMilliseconds;
+
+                    }
+
+                    if (linearFilterSelection == 3)
+                    {
+
+                        //batchLinearTimer.Start();
+                        batchLinearTimer.Restart();
+                        var linearImage = ImageProcessing.LinearFilter5x5(grayscaleImage, MaskWeights5x5, factor, bias);
+                        var linearImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_linear_5x5_gaussian_blur" + file.Extension);
+                        linearImage.Save(linearImageName);
+                        batchLinearTimer.Stop();
+                        batchLinearTimerInt += batchLinearTimer.ElapsedMilliseconds;
+                    }
+
+                    //Begin Image Quantization
+                    var quantizedImageError = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_quantization_error.txt");
+                    //batchQuantizationTimer.Start();
+                    batchQuantizationTimer.Restart();
+                    var quantizedImage = ImageProcessing.UniformImageQuantization(grayscaleImage, quantInput, quantizedImageError);
+                    var quantizedImageName = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(file.Name) + "_quantized_" + quantInput.ToString() + "_levels" + file.Extension);
+                    quantizedImage.Save(quantizedImageName);
+                    batchQuantizationTimer.Stop();
+                    batchQuantizationTimerInt += batchQuantizationTimer.ElapsedMilliseconds;
                 }
             });
 
-            ImageProcessing.GenerateCellClassAvgHistogram("cyl");
-            ImageProcessing.GenerateCellClassAvgHistogram("inter");
+            Parallel.ForEach(cellClasses, cellClass =>
+            {
+                batchClassHistGenTimer.Restart();
+                ImageProcessing.GenerateCellClassAvgHistogram(cellClass);
+                batchClassHistGenTimer.Stop();
+                batchClassHistGenTimerInt += batchClassHistGenTimer.ElapsedMilliseconds;
+            });
 
-            ImageProcessing.GenerateCellClassAvgHistogram("para");
-
-            ImageProcessing.GenerateCellClassAvgHistogram("mod");
-
-            ImageProcessing.GenerateCellClassAvgHistogram("super");
-
-            ImageProcessing.GenerateCellClassAvgHistogram("svar");
-            ImageProcessing.GenerateCellClassAvgHistogram("let");
 
             totaltimer.Stop();
 
             #region Metrics
-            batchGrayscaleTimeBox.Text = batchGrayscaletimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchImpulseTimeBox.Text = batchImpulseNoiseTimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchGaussianNoiseTimeBox.Text = batchGaussianNoiseTimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchHistogramCalculationTimeBox.Text = batchHistGenTimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchHistEqTimeBox.Text = batchHistEqImageTimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchQuantizationTimeBox.Text = batchQuantizationTimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchSharpenTimeBox.Text = batchLinearTimer.ElapsedMilliseconds.ToString() + " ms";
-            BatchMedianFilterTimeBox.Text = batchMedianTimer.ElapsedMilliseconds.ToString() + " ms";
+            batchGrayscaleTimeBox.Text = batchGrayscaletimerInt.ToString() + " ms";
+            BatchImpulseTimeBox.Text = batchImpulseNoiseTimerInt.ToString() + " ms";
+            BatchGaussianNoiseTimeBox.Text = batchGaussianNoiseTimerInt.ToString() + " ms";
+            BatchHistogramCalculationTimeBox.Text = batchHistGenTimerInt.ToString() + " ms";
+            BatchHistEqTimeBox.Text = batchHistEqImageTimerInt.ToString() + " ms";
+            BatchQuantizationTimeBox.Text = batchQuantizationTimerInt.ToString() + " ms";
+            BatchSharpenTimeBox.Text = batchLinearTimerInt.ToString() + " ms";
+            BatchMedianFilterTimeBox.Text = batchMedianTimerInt.ToString() + " ms";
+            classHist.Text = batchClassHistGenTimerInt.ToString() + " ms";
 
-            avgGrayScaleBox.Text = (batchGrayscaletimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgImpulseBox.Text = (batchImpulseNoiseTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgGNoiseBox.Text = (batchGaussianNoiseTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgHistCalcBox.Text = (batchHistGenTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgHistEqBox.Text = (batchHistEqImageTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgQuantBox.Text = (batchQuantizationTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgLinearBox.Text = (batchLinearTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
-            avgMedianBox.Text = (batchMedianTimer.ElapsedMilliseconds / files.Count()).ToString() + " ms";
+            avgGrayScaleBox.Text = (batchGrayscaletimerInt / files.Count()).ToString() + " ms";
+            avgImpulseBox.Text = (batchImpulseNoiseTimerInt / files.Count()).ToString() + " ms";
+            avgGNoiseBox.Text = (batchGaussianNoiseTimerInt / files.Count()).ToString() + " ms";
+            avgHistCalcBox.Text = (batchHistGenTimerInt / files.Count()).ToString() + " ms";
+            avgHistEqBox.Text = (batchHistEqImageTimerInt / files.Count()).ToString() + " ms";
+            avgQuantBox.Text = (batchQuantizationTimerInt / files.Count()).ToString() + " ms";
+            avgLinearBox.Text = (batchLinearTimerInt / files.Count()).ToString() + " ms";
+            avgMedianBox.Text = (batchMedianTimerInt / files.Count()).ToString() + " ms";
+            avgClassHist.Text = (batchClassHistGenTimerInt / 7).ToString() + " ms";
             totalTimeBox.Text = totaltimer.ElapsedMilliseconds.ToString() + " ms";
             #endregion
         }
 
         private void label37_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label38_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label39_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label40_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (medianFilterSelectionBox.SelectedIndex == 0)
+            {
+                MedianMatrix3x3.Visible = false;
+                MedianMatrix5x5.Visible = false;
+            }
+            if (medianFilterSelectionBox.SelectedIndex == 1)
+            {
+                MedianMatrix3x3.Visible = true;
+                MedianMatrix5x5.Visible = false;
+                MM3x300.Text = "1";
+                MM3x301.Text = "1";
+                MM3x302.Text = "1";
+                MM3x310.Text = "1";
+                MM3x311.Text = "1";
+                MM3x312.Text = "1";
+                MM3x320.Text = "1";
+                MM3x321.Text = "1";
+                MM3x322.Text = "1";
+            }
+
+            if (medianFilterSelectionBox.SelectedIndex == 2)
+            {
+                MedianMatrix3x3.Visible = false;
+                MedianMatrix5x5.Visible = true;
+
+                MM5x500.Text = "1";
+                MM5x501.Text = "1";
+                MM5x502.Text = "1";
+                MM5x503.Text = "1";
+                MM5x504.Text = "1";
+                MM5x510.Text = "1";
+                MM5x511.Text = "1";
+                MM5x512.Text = "1";
+                MM5x513.Text = "1";
+                MM5x514.Text = "1";
+                MM5x520.Text = "1";
+                MM5x521.Text = "1";
+                MM5x522.Text = "1";
+                MM5x523.Text = "1";
+                MM5x524.Text = "1";
+                MM5x530.Text = "1";
+                MM5x531.Text = "1";
+                MM5x532.Text = "1";
+                MM5x533.Text = "1";
+                MM5x534.Text = "1";
+                MM5x540.Text = "1";
+                MM5x541.Text = "1";
+                MM5x542.Text = "1";
+                MM5x543.Text = "1";
+                MM5x544.Text = "1";
+            }
+        }
+
+        private void MM3x300_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void medianFilterGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox16_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBox19_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox23_TextChanged(object sender, EventArgs e)
         {
 
         }

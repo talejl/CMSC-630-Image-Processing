@@ -1190,83 +1190,86 @@ namespace Talej_Image_Processor_CMSC_630
         {
             string inputPath = Settings.Default["InputPath"].ToString();
             string outputPath = Settings.Default["OutputPath"].ToString();
-            var cylFiles = new DirectoryInfo(inputPath)
+            var Files = new DirectoryInfo(inputPath)
             .GetFiles()
             .Where(f => f.IsImage() && f.Name.Contains(cellClass));
-
-            int[] ClassHistArray = new int[256];
-
-            foreach (var file in cylFiles)
+            if (Files.Count() > 0)
             {
-                Bitmap image = (Bitmap)Bitmap.FromFile(file.FullName);
-                Bitmap grayImage = RGB2GrayscaleImage(image, Settings.Default.ColorChoice);
-                int[] histogramArray = CalculateHistogram(grayImage);
-                ClassHistArray = AddArrays(ClassHistArray, histogramArray);
-            }
+                int[] ClassHistArray = new int[256];
 
-            float[] AvgClassHistArray = new float[256];
-            for (int i =0; i < AvgClassHistArray.Length; i++)
-            {
-                AvgClassHistArray[i] = ClassHistArray[i] / cylFiles.Count();
-                    
-            }
-            float maxIntensity = 0;
-
-            for (int i = 0; i < AvgClassHistArray.Length; i ++)
-            {
-                if (AvgClassHistArray[i] > maxIntensity)
+                foreach (var file in Files)
                 {
-                    //Set the new highest intensity value 
-                    maxIntensity = AvgClassHistArray[i];
+                    Bitmap image = (Bitmap)Bitmap.FromFile(file.FullName);
+                    Bitmap grayImage = RGB2GrayscaleImage(image, Settings.Default.ColorChoice);
+                    int[] histogramArray = CalculateHistogram(grayImage);
+                    ClassHistArray = AddArrays(ClassHistArray, histogramArray);
                 }
-            }
 
-            int histHeight = 288;
-            Bitmap img = new Bitmap(256, histHeight + 10);
-            using (Graphics g = Graphics.FromImage(img))
-            {
-                //loop through all intensity values in the histogram array
+                float[] AvgClassHistArray = new float[256];
                 for (int i = 0; i < AvgClassHistArray.Length; i++)
                 {
-                    float pct = AvgClassHistArray[i] / maxIntensity;   //get ratio of given histogram intensity element compared to the maximum recorded intesnity
-                    g.DrawLine(Pens.Black,
-                        new Point(i, img.Height - 5),
-                        new Point(i, img.Height - 5 - (int)(pct * histHeight))  // Use that percentage of the height
-                        );
+                    AvgClassHistArray[i] = ClassHistArray[i] / Files.Count();
+
+                }
+                float maxIntensity = 0;
+
+                for (int i = 0; i < AvgClassHistArray.Length; i++)
+                {
+                    if (AvgClassHistArray[i] > maxIntensity)
+                    {
+                        //Set the new highest intensity value 
+                        maxIntensity = AvgClassHistArray[i];
+                    }
+                }
+
+                int histHeight = 288;
+                Bitmap img = new Bitmap(256, histHeight + 10);
+                using (Graphics g = Graphics.FromImage(img))
+                {
+                    //loop through all intensity values in the histogram array
+                    for (int i = 0; i < AvgClassHistArray.Length; i++)
+                    {
+                        float pct = AvgClassHistArray[i] / maxIntensity;   //get ratio of given histogram intensity element compared to the maximum recorded intesnity
+                        g.DrawLine(Pens.Black,
+                            new Point(i, img.Height - 5),
+                            new Point(i, img.Height - 5 - (int)(pct * histHeight))  // Use that percentage of the height
+                            );
+                    }
+                }
+                string histogramImageName = "";
+                switch (cellClass)
+                {
+                    case "cyl":
+                        histogramImageName = Path.Combine(outputPath, "cyl_avg_histogram.bmp");
+                        img.Save(histogramImageName);
+                        break;
+                    case "inter":
+                        histogramImageName = Path.Combine(outputPath, "inter_avg_histogram.bmp");
+                        img.Save(histogramImageName);
+                        break;
+                    case "para":
+                        histogramImageName = Path.Combine(outputPath, "para_avg_histogram.bmp");
+                        img.Save(histogramImageName);
+                        break;
+                    case "let":
+                        histogramImageName = Path.Combine(outputPath, "let_avg_histogram.bmp");
+                        img.Save(histogramImageName);
+                        break;
+                    case "mod":
+                        histogramImageName = Path.Combine(outputPath, "mod_avg_histogram.bmp");
+                        img.Save(histogramImageName);
+                        break;
+                    case "super":
+                        histogramImageName = Path.Combine(outputPath, "super_avg_histogram.bmp");
+                        img.Save(histogramImageName);
+                        break;
+                    case "svar":
+                        histogramImageName = Path.Combine(outputPath, "svar_avg_histogram.bmp");
+                        img.Save(histogramImageName);
+                        break;
                 }
             }
-            string histogramImageName = "";
-            switch (cellClass)
-            {           
-                case "cyl":
-                    histogramImageName = Path.Combine(outputPath, "cyl_avg_histogram.bmp");
-                    img.Save(histogramImageName);
-                    break;
-                case "inter":
-                    histogramImageName = Path.Combine(outputPath, "inter_avg_histogram.bmp");
-                    img.Save(histogramImageName);
-                    break;
-                case "para":
-                    histogramImageName = Path.Combine(outputPath, "para_avg_histogram.bmp");
-                    img.Save(histogramImageName);
-                    break;
-                case "let":
-                    histogramImageName = Path.Combine(outputPath, "let_avg_histogram.bmp");
-                    img.Save(histogramImageName);
-                    break;
-                case "mod":
-                    histogramImageName = Path.Combine(outputPath, "mod_avg_histogram.bmp");
-                    img.Save(histogramImageName);
-                    break;
-                case "super":
-                    histogramImageName = Path.Combine(outputPath, "super_avg_histogram.bmp");
-                    img.Save(histogramImageName);
-                    break;
-                case "svar":
-                    histogramImageName = Path.Combine(outputPath, "svar_avg_histogram.bmp");
-                    img.Save(histogramImageName);
-                    break;
-            }
+
         }
 
         public static Bitmap GenerateHistogram(Bitmap grayScaleImage)

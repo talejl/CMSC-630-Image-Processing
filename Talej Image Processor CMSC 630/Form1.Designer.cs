@@ -98,7 +98,7 @@
             this.Matrix5x520 = new System.Windows.Forms.TextBox();
             this.Matrix5x510 = new System.Windows.Forms.TextBox();
             this.Matrix5x500 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.linearFilterSelectionBox = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.singleMedianFilterTimeBox = new System.Windows.Forms.TextBox();
             this.singleSharpenTimebox = new System.Windows.Forms.TextBox();
@@ -126,6 +126,10 @@
             this.label28 = new System.Windows.Forms.Label();
             this.quantLevelSlider = new System.Windows.Forms.TrackBar();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.avgClassHist = new System.Windows.Forms.TextBox();
+            this.classHist = new System.Windows.Forms.TextBox();
+            this.label38 = new System.Windows.Forms.Label();
             this.avgMedianBox = new System.Windows.Forms.TextBox();
             this.avgLinearBox = new System.Windows.Forms.TextBox();
             this.avgQuantBox = new System.Windows.Forms.TextBox();
@@ -158,6 +162,46 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.medianFilterGroupBox = new System.Windows.Forms.GroupBox();
+            this.label40 = new System.Windows.Forms.Label();
+            this.medianFilterSelectionBox = new System.Windows.Forms.ComboBox();
+            this.MedianMatrix3x3 = new System.Windows.Forms.Panel();
+            this.MM3x300 = new System.Windows.Forms.TextBox();
+            this.MM3x310 = new System.Windows.Forms.TextBox();
+            this.MM3x320 = new System.Windows.Forms.TextBox();
+            this.MM3x301 = new System.Windows.Forms.TextBox();
+            this.MM3x311 = new System.Windows.Forms.TextBox();
+            this.MM3x321 = new System.Windows.Forms.TextBox();
+            this.MM3x302 = new System.Windows.Forms.TextBox();
+            this.MM3x312 = new System.Windows.Forms.TextBox();
+            this.MM3x322 = new System.Windows.Forms.TextBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.MedianMatrix5x5 = new System.Windows.Forms.Panel();
+            this.MM5x500 = new System.Windows.Forms.TextBox();
+            this.MM5x510 = new System.Windows.Forms.TextBox();
+            this.MM5x520 = new System.Windows.Forms.TextBox();
+            this.MM5x530 = new System.Windows.Forms.TextBox();
+            this.MM5x540 = new System.Windows.Forms.TextBox();
+            this.MM5x501 = new System.Windows.Forms.TextBox();
+            this.MM5x511 = new System.Windows.Forms.TextBox();
+            this.MM5x521 = new System.Windows.Forms.TextBox();
+            this.MM5x531 = new System.Windows.Forms.TextBox();
+            this.MM5x541 = new System.Windows.Forms.TextBox();
+            this.MM5x502 = new System.Windows.Forms.TextBox();
+            this.MM5x512 = new System.Windows.Forms.TextBox();
+            this.MM5x522 = new System.Windows.Forms.TextBox();
+            this.MM5x532 = new System.Windows.Forms.TextBox();
+            this.MM5x542 = new System.Windows.Forms.TextBox();
+            this.MM5x503 = new System.Windows.Forms.TextBox();
+            this.MM5x513 = new System.Windows.Forms.TextBox();
+            this.MM5x523 = new System.Windows.Forms.TextBox();
+            this.MM5x533 = new System.Windows.Forms.TextBox();
+            this.MM5x543 = new System.Windows.Forms.TextBox();
+            this.MM5x504 = new System.Windows.Forms.TextBox();
+            this.MM5x514 = new System.Windows.Forms.TextBox();
+            this.MM5x524 = new System.Windows.Forms.TextBox();
+            this.MM5x534 = new System.Windows.Forms.TextBox();
+            this.MM5x544 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.Original)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Modified)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.impulsenoiseintensityslider)).BeginInit();
@@ -176,6 +220,9 @@
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.quantLevelSlider)).BeginInit();
             this.groupBox7.SuspendLayout();
+            this.medianFilterGroupBox.SuspendLayout();
+            this.MedianMatrix3x3.SuspendLayout();
+            this.MedianMatrix5x5.SuspendLayout();
             this.SuspendLayout();
             // 
             // Original
@@ -461,19 +508,19 @@
             this.groupBox4.Controls.Add(this.label24);
             this.groupBox4.Controls.Add(this.Matrix3x3);
             this.groupBox4.Controls.Add(this.Matrix5x5);
-            this.groupBox4.Controls.Add(this.comboBox1);
+            this.groupBox4.Controls.Add(this.linearFilterSelectionBox);
             this.groupBox4.Location = new System.Drawing.Point(373, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(574, 193);
+            this.groupBox4.Size = new System.Drawing.Size(351, 193);
             this.groupBox4.TabIndex = 18;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Filtering Options";
+            this.groupBox4.Text = "Linear Filtering";
             this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(325, 19);
+            this.label27.Location = new System.Drawing.Point(159, 16);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(79, 15);
             this.label27.TabIndex = 8;
@@ -481,14 +528,14 @@
             // 
             // filterBiasTextBox
             // 
-            this.filterBiasTextBox.Location = new System.Drawing.Point(90, 109);
+            this.filterBiasTextBox.Location = new System.Drawing.Point(71, 91);
             this.filterBiasTextBox.Name = "filterBiasTextBox";
             this.filterBiasTextBox.Size = new System.Drawing.Size(56, 23);
             this.filterBiasTextBox.TabIndex = 7;
             // 
             // filterFactorTextBox
             // 
-            this.filterFactorTextBox.Location = new System.Drawing.Point(90, 66);
+            this.filterFactorTextBox.Location = new System.Drawing.Point(71, 63);
             this.filterFactorTextBox.Name = "filterFactorTextBox";
             this.filterFactorTextBox.Size = new System.Drawing.Size(56, 23);
             this.filterFactorTextBox.TabIndex = 6;
@@ -496,7 +543,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(6, 110);
+            this.label26.Location = new System.Drawing.Point(6, 94);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(28, 15);
             this.label26.TabIndex = 5;
@@ -505,7 +552,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(6, 74);
+            this.label25.Location = new System.Drawing.Point(6, 66);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(40, 15);
             this.label25.TabIndex = 4;
@@ -514,7 +561,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(0, 38);
+            this.label24.Location = new System.Drawing.Point(6, 17);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(84, 15);
             this.label24.TabIndex = 3;
@@ -531,7 +578,7 @@
             this.Matrix3x3.Controls.Add(this.M3x301);
             this.Matrix3x3.Controls.Add(this.M3x310);
             this.Matrix3x3.Controls.Add(this.M3x300);
-            this.Matrix3x3.Location = new System.Drawing.Point(306, 37);
+            this.Matrix3x3.Location = new System.Drawing.Point(138, 34);
             this.Matrix3x3.Name = "Matrix3x3";
             this.Matrix3x3.Size = new System.Drawing.Size(126, 107);
             this.Matrix3x3.TabIndex = 1;
@@ -626,7 +673,7 @@
             this.Matrix5x5.Controls.Add(this.Matrix5x520);
             this.Matrix5x5.Controls.Add(this.Matrix5x510);
             this.Matrix5x5.Controls.Add(this.Matrix5x500);
-            this.Matrix5x5.Location = new System.Drawing.Point(261, 35);
+            this.Matrix5x5.Location = new System.Drawing.Point(130, 34);
             this.Matrix5x5.Name = "Matrix5x5";
             this.Matrix5x5.Size = new System.Drawing.Size(212, 142);
             this.Matrix5x5.TabIndex = 2;
@@ -806,14 +853,14 @@
             this.Matrix5x500.Size = new System.Drawing.Size(36, 23);
             this.Matrix5x500.TabIndex = 0;
             // 
-            // comboBox1
+            // linearFilterSelectionBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(90, 34);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 23);
-            this.comboBox1.TabIndex = 0;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.linearFilterSelectionBox.FormattingEnabled = true;
+            this.linearFilterSelectionBox.Location = new System.Drawing.Point(6, 34);
+            this.linearFilterSelectionBox.Name = "linearFilterSelectionBox";
+            this.linearFilterSelectionBox.Size = new System.Drawing.Size(121, 23);
+            this.linearFilterSelectionBox.TabIndex = 0;
+            this.linearFilterSelectionBox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // groupBox5
             // 
@@ -833,9 +880,9 @@
             this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Controls.Add(this.label8);
             this.groupBox5.Controls.Add(this.label7);
-            this.groupBox5.Location = new System.Drawing.Point(26, 488);
+            this.groupBox5.Location = new System.Drawing.Point(26, 468);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(448, 132);
+            this.groupBox5.Size = new System.Drawing.Size(448, 163);
             this.groupBox5.TabIndex = 19;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Single Image Performance Metrics";
@@ -1040,7 +1087,7 @@
             this.groupBox6.Controls.Add(this.quantErrorBox);
             this.groupBox6.Controls.Add(this.label28);
             this.groupBox6.Controls.Add(this.quantLevelSlider);
-            this.groupBox6.Location = new System.Drawing.Point(953, 12);
+            this.groupBox6.Location = new System.Drawing.Point(1108, 12);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(162, 116);
             this.groupBox6.TabIndex = 21;
@@ -1078,6 +1125,10 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.label39);
+            this.groupBox7.Controls.Add(this.avgClassHist);
+            this.groupBox7.Controls.Add(this.classHist);
+            this.groupBox7.Controls.Add(this.label38);
             this.groupBox7.Controls.Add(this.avgMedianBox);
             this.groupBox7.Controls.Add(this.avgLinearBox);
             this.groupBox7.Controls.Add(this.avgQuantBox);
@@ -1110,13 +1161,47 @@
             this.groupBox7.Controls.Add(this.label18);
             this.groupBox7.Controls.Add(this.label17);
             this.groupBox7.Controls.Add(this.label13);
-            this.groupBox7.Location = new System.Drawing.Point(503, 488);
+            this.groupBox7.Location = new System.Drawing.Point(503, 468);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(1176, 132);
+            this.groupBox7.Size = new System.Drawing.Size(1176, 163);
             this.groupBox7.TabIndex = 22;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Batch Performance Metrics";
             this.groupBox7.Enter += new System.EventHandler(this.groupBox7_Enter);
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(559, 136);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(202, 15);
+            this.label39.TabIndex = 56;
+            this.label39.Text = "Average Class Histogram Calculation";
+            this.label39.Click += new System.EventHandler(this.label39_Click);
+            // 
+            // avgClassHist
+            // 
+            this.avgClassHist.Location = new System.Drawing.Point(780, 133);
+            this.avgClassHist.Name = "avgClassHist";
+            this.avgClassHist.Size = new System.Drawing.Size(56, 23);
+            this.avgClassHist.TabIndex = 55;
+            // 
+            // classHist
+            // 
+            this.classHist.Location = new System.Drawing.Point(177, 132);
+            this.classHist.Name = "classHist";
+            this.classHist.Size = new System.Drawing.Size(56, 23);
+            this.classHist.TabIndex = 54;
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(8, 133);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(154, 15);
+            this.label38.TabIndex = 53;
+            this.label38.Text = "Class Histogram Generation";
+            this.label38.Click += new System.EventHandler(this.label38_Click);
             // 
             // avgMedianBox
             // 
@@ -1374,11 +1459,345 @@
             this.label13.TabIndex = 1;
             this.label13.Text = "Grayscale Conversion";
             // 
+            // medianFilterGroupBox
+            // 
+            this.medianFilterGroupBox.Controls.Add(this.MedianMatrix5x5);
+            this.medianFilterGroupBox.Controls.Add(this.label41);
+            this.medianFilterGroupBox.Controls.Add(this.MedianMatrix3x3);
+            this.medianFilterGroupBox.Controls.Add(this.medianFilterSelectionBox);
+            this.medianFilterGroupBox.Controls.Add(this.label40);
+            this.medianFilterGroupBox.Location = new System.Drawing.Point(731, 12);
+            this.medianFilterGroupBox.Name = "medianFilterGroupBox";
+            this.medianFilterGroupBox.Size = new System.Drawing.Size(371, 193);
+            this.medianFilterGroupBox.TabIndex = 23;
+            this.medianFilterGroupBox.TabStop = false;
+            this.medianFilterGroupBox.Text = "Median Filtering";
+            this.medianFilterGroupBox.Enter += new System.EventHandler(this.medianFilterGroupBox_Enter);
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(6, 23);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(84, 15);
+            this.label40.TabIndex = 0;
+            this.label40.Text = "Filter Selection";
+            // 
+            // medianFilterSelectionBox
+            // 
+            this.medianFilterSelectionBox.FormattingEnabled = true;
+            this.medianFilterSelectionBox.Location = new System.Drawing.Point(6, 41);
+            this.medianFilterSelectionBox.Name = "medianFilterSelectionBox";
+            this.medianFilterSelectionBox.Size = new System.Drawing.Size(121, 23);
+            this.medianFilterSelectionBox.TabIndex = 1;
+            this.medianFilterSelectionBox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged_1);
+            // 
+            // MedianMatrix3x3
+            // 
+            this.MedianMatrix3x3.Controls.Add(this.MM3x322);
+            this.MedianMatrix3x3.Controls.Add(this.MM3x312);
+            this.MedianMatrix3x3.Controls.Add(this.MM3x302);
+            this.MedianMatrix3x3.Controls.Add(this.MM3x321);
+            this.MedianMatrix3x3.Controls.Add(this.MM3x311);
+            this.MedianMatrix3x3.Controls.Add(this.MM3x301);
+            this.MedianMatrix3x3.Controls.Add(this.MM3x320);
+            this.MedianMatrix3x3.Controls.Add(this.MM3x310);
+            this.MedianMatrix3x3.Controls.Add(this.MM3x300);
+            this.MedianMatrix3x3.Location = new System.Drawing.Point(168, 38);
+            this.MedianMatrix3x3.Name = "MedianMatrix3x3";
+            this.MedianMatrix3x3.Size = new System.Drawing.Size(122, 92);
+            this.MedianMatrix3x3.TabIndex = 2;
+            // 
+            // MM3x300
+            // 
+            this.MM3x300.Location = new System.Drawing.Point(3, 6);
+            this.MM3x300.Name = "MM3x300";
+            this.MM3x300.Size = new System.Drawing.Size(33, 23);
+            this.MM3x300.TabIndex = 1;
+            this.MM3x300.TextChanged += new System.EventHandler(this.MM3x300_TextChanged);
+            // 
+            // MM3x310
+            // 
+            this.MM3x310.Location = new System.Drawing.Point(3, 35);
+            this.MM3x310.Name = "MM3x310";
+            this.MM3x310.Size = new System.Drawing.Size(33, 23);
+            this.MM3x310.TabIndex = 2;
+            // 
+            // MM3x320
+            // 
+            this.MM3x320.Location = new System.Drawing.Point(3, 62);
+            this.MM3x320.Name = "MM3x320";
+            this.MM3x320.Size = new System.Drawing.Size(33, 23);
+            this.MM3x320.TabIndex = 3;
+            // 
+            // MM3x301
+            // 
+            this.MM3x301.Location = new System.Drawing.Point(42, 6);
+            this.MM3x301.Name = "MM3x301";
+            this.MM3x301.Size = new System.Drawing.Size(33, 23);
+            this.MM3x301.TabIndex = 4;
+            // 
+            // MM3x311
+            // 
+            this.MM3x311.Location = new System.Drawing.Point(42, 34);
+            this.MM3x311.Name = "MM3x311";
+            this.MM3x311.Size = new System.Drawing.Size(33, 23);
+            this.MM3x311.TabIndex = 5;
+            // 
+            // MM3x321
+            // 
+            this.MM3x321.Location = new System.Drawing.Point(42, 62);
+            this.MM3x321.Name = "MM3x321";
+            this.MM3x321.Size = new System.Drawing.Size(33, 23);
+            this.MM3x321.TabIndex = 6;
+            // 
+            // MM3x302
+            // 
+            this.MM3x302.Location = new System.Drawing.Point(81, 5);
+            this.MM3x302.Name = "MM3x302";
+            this.MM3x302.Size = new System.Drawing.Size(33, 23);
+            this.MM3x302.TabIndex = 7;
+            // 
+            // MM3x312
+            // 
+            this.MM3x312.Location = new System.Drawing.Point(81, 34);
+            this.MM3x312.Name = "MM3x312";
+            this.MM3x312.Size = new System.Drawing.Size(33, 23);
+            this.MM3x312.TabIndex = 8;
+            // 
+            // MM3x322
+            // 
+            this.MM3x322.Location = new System.Drawing.Point(81, 61);
+            this.MM3x322.Name = "MM3x322";
+            this.MM3x322.Size = new System.Drawing.Size(33, 23);
+            this.MM3x322.TabIndex = 9;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(187, 20);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(79, 15);
+            this.label41.TabIndex = 3;
+            this.label41.Text = "Filter Weights";
+            // 
+            // MedianMatrix5x5
+            // 
+            this.MedianMatrix5x5.Controls.Add(this.MM5x544);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x534);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x524);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x514);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x504);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x543);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x533);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x523);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x513);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x503);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x542);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x532);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x522);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x512);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x502);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x541);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x531);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x521);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x511);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x501);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x540);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x530);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x520);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x510);
+            this.MedianMatrix5x5.Controls.Add(this.MM5x500);
+            this.MedianMatrix5x5.Location = new System.Drawing.Point(137, 37);
+            this.MedianMatrix5x5.Name = "MedianMatrix5x5";
+            this.MedianMatrix5x5.Size = new System.Drawing.Size(200, 149);
+            this.MedianMatrix5x5.TabIndex = 4;
+            this.MedianMatrix5x5.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
+            // MM5x500
+            // 
+            this.MM5x500.Location = new System.Drawing.Point(4, 6);
+            this.MM5x500.Name = "MM5x500";
+            this.MM5x500.Size = new System.Drawing.Size(33, 23);
+            this.MM5x500.TabIndex = 1;
+            // 
+            // MM5x510
+            // 
+            this.MM5x510.Location = new System.Drawing.Point(4, 33);
+            this.MM5x510.Name = "MM5x510";
+            this.MM5x510.Size = new System.Drawing.Size(33, 23);
+            this.MM5x510.TabIndex = 2;
+            // 
+            // MM5x520
+            // 
+            this.MM5x520.Location = new System.Drawing.Point(4, 61);
+            this.MM5x520.Name = "MM5x520";
+            this.MM5x520.Size = new System.Drawing.Size(33, 23);
+            this.MM5x520.TabIndex = 3;
+            // 
+            // MM5x530
+            // 
+            this.MM5x530.Location = new System.Drawing.Point(4, 91);
+            this.MM5x530.Name = "MM5x530";
+            this.MM5x530.Size = new System.Drawing.Size(33, 23);
+            this.MM5x530.TabIndex = 4;
+            // 
+            // MM5x540
+            // 
+            this.MM5x540.Location = new System.Drawing.Point(4, 120);
+            this.MM5x540.Name = "MM5x540";
+            this.MM5x540.Size = new System.Drawing.Size(33, 23);
+            this.MM5x540.TabIndex = 5;
+            // 
+            // MM5x501
+            // 
+            this.MM5x501.Location = new System.Drawing.Point(43, 6);
+            this.MM5x501.Name = "MM5x501";
+            this.MM5x501.Size = new System.Drawing.Size(33, 23);
+            this.MM5x501.TabIndex = 6;
+            // 
+            // MM5x511
+            // 
+            this.MM5x511.Location = new System.Drawing.Point(43, 33);
+            this.MM5x511.Name = "MM5x511";
+            this.MM5x511.Size = new System.Drawing.Size(33, 23);
+            this.MM5x511.TabIndex = 7;
+            // 
+            // MM5x521
+            // 
+            this.MM5x521.Location = new System.Drawing.Point(43, 61);
+            this.MM5x521.Name = "MM5x521";
+            this.MM5x521.Size = new System.Drawing.Size(33, 23);
+            this.MM5x521.TabIndex = 8;
+            // 
+            // MM5x531
+            // 
+            this.MM5x531.Location = new System.Drawing.Point(43, 90);
+            this.MM5x531.Name = "MM5x531";
+            this.MM5x531.Size = new System.Drawing.Size(33, 23);
+            this.MM5x531.TabIndex = 9;
+            // 
+            // MM5x541
+            // 
+            this.MM5x541.Location = new System.Drawing.Point(43, 119);
+            this.MM5x541.Name = "MM5x541";
+            this.MM5x541.Size = new System.Drawing.Size(33, 23);
+            this.MM5x541.TabIndex = 10;
+            // 
+            // MM5x502
+            // 
+            this.MM5x502.Location = new System.Drawing.Point(82, 7);
+            this.MM5x502.Name = "MM5x502";
+            this.MM5x502.Size = new System.Drawing.Size(33, 23);
+            this.MM5x502.TabIndex = 11;
+            // 
+            // MM5x512
+            // 
+            this.MM5x512.Location = new System.Drawing.Point(82, 34);
+            this.MM5x512.Name = "MM5x512";
+            this.MM5x512.Size = new System.Drawing.Size(33, 23);
+            this.MM5x512.TabIndex = 12;
+            // 
+            // MM5x522
+            // 
+            this.MM5x522.Location = new System.Drawing.Point(82, 61);
+            this.MM5x522.Name = "MM5x522";
+            this.MM5x522.Size = new System.Drawing.Size(33, 23);
+            this.MM5x522.TabIndex = 13;
+            // 
+            // MM5x532
+            // 
+            this.MM5x532.Location = new System.Drawing.Point(82, 90);
+            this.MM5x532.Name = "MM5x532";
+            this.MM5x532.Size = new System.Drawing.Size(33, 23);
+            this.MM5x532.TabIndex = 14;
+            // 
+            // MM5x542
+            // 
+            this.MM5x542.Location = new System.Drawing.Point(82, 120);
+            this.MM5x542.Name = "MM5x542";
+            this.MM5x542.Size = new System.Drawing.Size(33, 23);
+            this.MM5x542.TabIndex = 15;
+            // 
+            // MM5x503
+            // 
+            this.MM5x503.Location = new System.Drawing.Point(121, 6);
+            this.MM5x503.Name = "MM5x503";
+            this.MM5x503.Size = new System.Drawing.Size(33, 23);
+            this.MM5x503.TabIndex = 16;
+            this.MM5x503.TextChanged += new System.EventHandler(this.textBox16_TextChanged);
+            // 
+            // MM5x513
+            // 
+            this.MM5x513.Location = new System.Drawing.Point(121, 34);
+            this.MM5x513.Name = "MM5x513";
+            this.MM5x513.Size = new System.Drawing.Size(33, 23);
+            this.MM5x513.TabIndex = 17;
+            // 
+            // MM5x523
+            // 
+            this.MM5x523.Location = new System.Drawing.Point(121, 61);
+            this.MM5x523.Name = "MM5x523";
+            this.MM5x523.Size = new System.Drawing.Size(33, 23);
+            this.MM5x523.TabIndex = 18;
+            // 
+            // MM5x533
+            // 
+            this.MM5x533.Location = new System.Drawing.Point(121, 91);
+            this.MM5x533.Name = "MM5x533";
+            this.MM5x533.Size = new System.Drawing.Size(33, 23);
+            this.MM5x533.TabIndex = 19;
+            this.MM5x533.TextChanged += new System.EventHandler(this.textBox19_TextChanged);
+            // 
+            // MM5x543
+            // 
+            this.MM5x543.Location = new System.Drawing.Point(121, 119);
+            this.MM5x543.Name = "MM5x543";
+            this.MM5x543.Size = new System.Drawing.Size(33, 23);
+            this.MM5x543.TabIndex = 20;
+            // 
+            // MM5x504
+            // 
+            this.MM5x504.Location = new System.Drawing.Point(160, 6);
+            this.MM5x504.Name = "MM5x504";
+            this.MM5x504.Size = new System.Drawing.Size(33, 23);
+            this.MM5x504.TabIndex = 21;
+            // 
+            // MM5x514
+            // 
+            this.MM5x514.Location = new System.Drawing.Point(160, 33);
+            this.MM5x514.Name = "MM5x514";
+            this.MM5x514.Size = new System.Drawing.Size(33, 23);
+            this.MM5x514.TabIndex = 22;
+            // 
+            // MM5x524
+            // 
+            this.MM5x524.Location = new System.Drawing.Point(160, 61);
+            this.MM5x524.Name = "MM5x524";
+            this.MM5x524.Size = new System.Drawing.Size(33, 23);
+            this.MM5x524.TabIndex = 23;
+            this.MM5x524.TextChanged += new System.EventHandler(this.textBox23_TextChanged);
+            // 
+            // MM5x534
+            // 
+            this.MM5x534.Location = new System.Drawing.Point(160, 90);
+            this.MM5x534.Name = "MM5x534";
+            this.MM5x534.Size = new System.Drawing.Size(33, 23);
+            this.MM5x534.TabIndex = 24;
+            // 
+            // MM5x544
+            // 
+            this.MM5x544.Location = new System.Drawing.Point(160, 119);
+            this.MM5x544.Name = "MM5x544";
+            this.MM5x544.Size = new System.Drawing.Size(33, 23);
+            this.MM5x544.TabIndex = 25;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1730, 632);
+            this.ClientSize = new System.Drawing.Size(1730, 637);
+            this.Controls.Add(this.medianFilterGroupBox);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.RGBOptions);
@@ -1418,6 +1837,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.quantLevelSlider)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            this.medianFilterGroupBox.ResumeLayout(false);
+            this.medianFilterGroupBox.PerformLayout();
+            this.MedianMatrix3x3.ResumeLayout(false);
+            this.MedianMatrix3x3.PerformLayout();
+            this.MedianMatrix5x5.ResumeLayout(false);
+            this.MedianMatrix5x5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1473,7 +1898,7 @@
         private Label label16;
         private Label label15;
         public TextBox singleGrayscaleTimeBox;
-        private ComboBox comboBox1;
+        private ComboBox linearFilterSelectionBox;
         private GroupBox groupBox7;
         public TextBox BatchMedianFilterTimeBox;
         public TextBox BatchSharpenTimeBox;
@@ -1554,5 +1979,49 @@
         private Label label37;
         private TextBox totalTimeBox;
         private Button button6;
+        private Label label38;
+        private Label label39;
+        private TextBox avgClassHist;
+        private TextBox classHist;
+        private GroupBox medianFilterGroupBox;
+        private Label label40;
+        private ComboBox medianFilterSelectionBox;
+        private Label label41;
+        private Panel MedianMatrix3x3;
+        private TextBox MM3x322;
+        private TextBox MM3x312;
+        private TextBox MM3x302;
+        private TextBox MM3x321;
+        private TextBox MM3x311;
+        private TextBox MM3x301;
+        private TextBox MM3x320;
+        private TextBox MM3x310;
+        private TextBox MM3x300;
+        private Panel MedianMatrix5x5;
+        private TextBox MM5x530;
+        private TextBox MM5x520;
+        private TextBox MM5x510;
+        private TextBox MM5x500;
+        private TextBox MM5x503;
+        private TextBox MM5x542;
+        private TextBox MM5x532;
+        private TextBox MM5x522;
+        private TextBox MM5x512;
+        private TextBox MM5x502;
+        private TextBox MM5x541;
+        private TextBox MM5x531;
+        private TextBox MM5x521;
+        private TextBox MM5x511;
+        private TextBox MM5x501;
+        private TextBox MM5x540;
+        private TextBox MM5x533;
+        private TextBox MM5x523;
+        private TextBox MM5x513;
+        private TextBox MM5x544;
+        private TextBox MM5x534;
+        private TextBox MM5x524;
+        private TextBox MM5x514;
+        private TextBox MM5x504;
+        private TextBox MM5x543;
     }
 }
